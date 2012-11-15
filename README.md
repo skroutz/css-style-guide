@@ -1,10 +1,11 @@
 # CSS Architecture and Coding Style Conventions
 
 > When it comes to web development, <br/>
-> the answer to most questions is “it depends”.
+> the answer to most questions is “it depends”.<br/>
 > -- Snooca
 
 Definitely, there is not "one true way" of developing right large-scale websites. After having build websites on a large scale, we have discover some techniques that can keep CSS organized and structured, leading to code that is easier to build and maintain.
+
 This is an attempt to document a consistent approach to site development when using CSS. Feel free to take this in its entirety or use only the parts that work best for you. Or don’t use it at all. 
 
 
@@ -29,7 +30,7 @@ This is an attempt to document a consistent approach to site development when us
 
 ## File Organization
 
-> Don't agonize. Organize.
+> Don't agonize. Organize.<br/>
 > Florynce Kennedy 
 
 At the very core of CSS Architecture is categorization. At Skroutz.gr, there are three types of categories:
@@ -50,7 +51,6 @@ Modules are the reusable, modular parts of our design. They are the callouts, th
 
 In general, the CSS file organization should follow something like this:
 
-    ```
     styles
     ├── base
     │   ├── reset.scss
@@ -66,21 +66,21 @@ In general, the CSS file organization should follow something like this:
         ├── module.scss
         ├── module.scss
         └── ...
-    ```
 
-### Base Rules{base-rules}
+
+### Base Rules
 
 A Base rule is applied to an element using an element selector, a descendent selector, or a child selector, along with any pseudo-classes. It doesn’t include any class or ID selectors. It is defining the default styling for how that element should look in all occurrences on the page.
 
 Base styles include setting resets, heading sizes, default link styles, default font styles, and body backgrounds. There should be no need to use!important in a Base style.
 
 
-### Layouts Rules{base-rules}
+### Layouts Rules
 
 Layout styles dictating the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as header and footer are traditionally styled using ID selectors. Generally, a Layout style only has a single selector: a single ID or class name. 
 
 
-### Module Rules{base-rules}
+### Module Rules
 
 A Module is a more discrete component of the page. Modules sit inside Layout components or can sometimes sit within other Modules, too. Each Module should be designed to exist as a standalone component. In doing so, the page will be more flexible. If done right, Modules can easily be moved to different parts of the layout without breaking.
 
@@ -89,7 +89,7 @@ When defining the rule set for a module, avoid using IDs and element selectors, 
 
 ## Media Queries
 
-> The point is that you want to have a system that is responsive. 
+> The point is that you want to have a system that is responsive.<br/>
 > Bill Joy 
 
 Media queries are an approach to managing state change. A media query, depending on the file size, can be defined as a separate partial file, or it can be defined within @media block within a specific style sheet (at the bottom).
@@ -113,13 +113,12 @@ Elements that occur exactly once inside a page should use IDs, otherwise, use cl
 
 When styling a component, start with an element + class namespace (prefer class names over ids), prefer direct descendant selectors by default, and use as little specificity as possible. Here is a good example:
     
-    ```Html
     <ul class="category-list">
       <li class="item">Category 1</li>
       <li class="item">Category 2</li>
       <li class="item">Category 3</li>
     </ul>
-    ```
+
 
 ### CSS Specificity guidelines
 
@@ -127,9 +126,11 @@ When styling a component, start with an element + class namespace (prefer class 
 * When modifying an existing element for a specific use, try to use specific class names. Instead of .listings-layout.bigger use rules like .listings-layout.listings-bigger. Think about ack/greping your code in the future.
 * The class names disabled, mousedown, danger, hover, selected, and active should always be namespaced by a class (button.classy.selected is a good example).
 
+
 ### ID attributes
 
 Using ID attributes in our HTML can be a good thing and in some cases, absolutely necessary. For example, they provide efficient hooks for JavaScript. For CSS, however, ID selectors aren’t necessary as the performance difference between ID and class selectors is nearly non-existent and can make styling more complicated due to increasing specificity.
+
 
 ### Avoid element selectors
 
@@ -137,9 +138,11 @@ Use child or descendant selectors with element selectors if the element selector
 
 If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
 
+
 ### Only include a selector that includes semantics
 
 A span or div holds none. A heading has some. A class defined on an element has plenty. By adding the classes to the elements, we have increased the semantics of what those elements mean and removed any ambiguity when it comes to styling them.
+
 
 ### Subclassing Modules
 
@@ -148,6 +151,7 @@ When we have the same module in different sections, the first instinct is to use
 With sub-classing the module, both the base module and the sub-module class names get applied to the HTML element. Try to avoid conditional styling based on location. If you are changing the look of a module for usage elsewhere on the page or site, sub-class the module instead.
 
 While more specific layout components assigned with IDs could be used to provide specialized styling for modules, sub-classing the module will allow the module to be moved to other sections of the site more easily and you will avoid increasing the specificity unnecessarily.
+
 
 ### Using !important
 
