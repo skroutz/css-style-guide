@@ -15,9 +15,14 @@ It contains a mashup of ideas from the [Github CSS styleguide](https://github.co
 ## Table of Contents
 
 * [Coding Style](#coding-style)
-* [File Organization](#file-organization)
-* [Media Queries](#media-queries)
+  * [Pixels vs. Ems](#pixels-vs-ems)
 * [Specificity](#specificity)
+  * [CSS Specificity guidelines](#css-specificity-guidelines)
+* [File Organization](#file-organization)
+  * [Base Rules](#base-rules)
+  * [Layout Rules](#layout-rules)
+  * [Module Rules](#module-rules)
+* [Media Queries](#media-queries)
 * [Declaration Order](#declaration-order)
 * [Misc](#misc)
 
@@ -136,7 +141,7 @@ Base styles include setting resets, heading sizes, default link styles, default 
 
 Layout styles dictate the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as headers and footers are traditionally styled using ID selectors. Generally, a Layout style **has only a single selector**: a single ID or class name.
 
-### Using ID selectors
+#### Using ID selectors
 
 Using ID attributes in our HTML can be a good thing and in some cases, absolutely necessary. For example, they provide efficient hooks for JavaScript. For CSS, however, ID selectors aren’t necessary as the performance difference between ID and class selectors is nearly non-existent and can make styling more complicated due to increasing specificity.
 
@@ -146,19 +151,19 @@ A Module is a more discrete component of the page. Modules sit inside Layout com
 
 When defining the rule set for a module, **avoid using IDs and element selectors**, sticking **only to class names**. A module will likely contain a number of elements and there is likely to be a desire to use descendent or child selectors to target those elements.
 
-### Avoid element selectors
+#### Avoid element selectors
 
 Use child or descendant selectors with element selectors if the element selectors will and can be predictable. Using `.class` span is great if a span will predictably be used and styled the same way every time while within that module. The problem is that as a project grows in complexity, the more likely that you will need to expand a component’s functionality and the more limited you will be, having used such a generic element within your rule.
 
 If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
 
-### Only include a selector that includes semantics
+#### Only include a selector that includes semantics
 
 A span or div holds none. A heading has some. A class defined on an element has plenty. By adding the classes to the elements, we have increased the semantics of what those elements mean and removed any ambiguity when it comes to styling them.
 
 If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
 
-### Subclassing Modules
+#### Subclassing Modules
 
 When we have the same module in different sections, the first instinct is to use a parent element to style that module differently. The problem with this approach is that you can run into specificity issues that require adding even more selectors to battle against it or to quickly fall back to using !important.
 
@@ -166,7 +171,7 @@ With sub-classing the module, both the base module and the sub-module class name
 
 While more specific layout components assigned with IDs could be used to provide specialized styling for modules, sub-classing the module will allow the module to be moved to other sections of the site more easily and you will avoid increasing the specificity unnecessarily.
 
-### Using !important
+#### Using !important
 
 Be cautious. Leave !important off until you **actually** and **truly** need it.
 
