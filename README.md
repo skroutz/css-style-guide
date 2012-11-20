@@ -47,6 +47,45 @@ Here is a good example syntax:
 
 Use `px` for `font-size`, because it offers absolute control over text. Additionally, unit-less `line-height` is preferred because it does not inherit a percentage value of its parent element, but instead is based on a multiplier of the `font-size`.
 
+## Specificity
+
+> CSS takes into account both code order and selector specificity.<br/>
+> So, don't fight the css cascade.
+
+Elements that occur **exactly once** inside a page should use IDs, otherwise, use classes. When in doubt, use a class name.
+
+  * **Good** candidates for ids: header, footer, modal popups.
+  * **Bad** candidates for ids: navigation, item listings, item view pages (ex: issue view).
+
+When styling a component, start with an element + class namespace (prefer class names over ids), prefer direct descendant selectors by default, and use as little specificity as possible. Here is a good example:
+
+```HTML
+<!-- This is a good example -->
+<ul class="category-list">
+  <li class="item">Category 1</li>
+  <li class="item">Category 2</li>
+  <li class="item">Category 3</li>
+</ul>
+```
+
+```CSS
+ul.category-list { // element + class namespace
+
+  &>li { // direct descendant selector > for list items
+    list-style-type: disc;
+  }
+
+  a { // minimal specificity for all links
+    color: #ff0000;
+  }
+}
+```
+
+### CSS Specificity guidelines
+
+* If you must use an id selector (`#selector`) make sure that you have no more than _one_ in your rule declaration. A rule like `#header .search #quicksearch { ... }` is considered harmful.
+* When modifying an existing element for a specific use, try to use specific class names. Instead of `.listings-layout.bigger` use rules like `.listings-layout.listings-bigger`. Think about `ack/grep`ing your code in the future.
+* The class names `disabled`, `mousedown`, `danger`, `hover`, `selected`, and `active` should _always_ be namespaced by a class (`button.classy.selected` is a good example).
 
 ## File Organization
 
@@ -95,60 +134,17 @@ Base styles include setting resets, heading sizes, default link styles, default 
 
 ### Layouts Rules
 
-Layout styles dictate the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as headers and footers are traditionally styled using ID selectors. Generally, a Layout style **has only a single selector**: a single ID or class name. 
+Layout styles dictate the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as headers and footers are traditionally styled using ID selectors. Generally, a Layout style **has only a single selector**: a single ID or class name.
 
+### Using ID selectors
+
+Using ID attributes in our HTML can be a good thing and in some cases, absolutely necessary. For example, they provide efficient hooks for JavaScript. For CSS, however, ID selectors aren’t necessary as the performance difference between ID and class selectors is nearly non-existent and can make styling more complicated due to increasing specificity.
 
 ### Module Rules
 
 A Module is a more discrete component of the page. Modules sit inside Layout components or can sometimes sit within other Modules, too. Each Module should be designed to exist as a standalone component. In doing so, the page will be more flexible. If done right, Modules can easily be moved to different parts of the layout without breaking.
 
-When defining the rule set for a module, avoid using IDs and element selectors, sticking only to class names. A module will likely contain a number of elements and there is likely to be a desire to use descendent or child selectors to target those elements.
-
-
-## Media Queries
-
-> The point is that you want to have a system that is responsive.<br/>
-> -- Bill Joy 
-
-Media queries are an approach to managing state change. A media query, depending on the file size, can be defined as a separate partial file, or it can be defined within @media block within a specific style sheet (at the bottom).
-
-The intent is to keep the styles that pertain to a specific layout or module with the rest of these. We declare 2 redlines for three versions of our site, 640px and 960px:
-
-* Viewport < 640px (Mobile version).
-* 641px < Viewport < 960px (Tablet version).
-* 961px < Viewport (Desktop version).
-
-
-## Specificity
-
-> CSS takes into account both code order and selector specificity.<br/> 
-> So, don't fight the css cascade.
-
-Elements that occur exactly once inside a page should use IDs, otherwise, use classes. When in doubt, use a class name.
-
-  * Good candidates for ids: header, footer, modal popups.
-  * Bad candidates for ids: navigation, item listings, item view pages (ex: issue view).
-
-When styling a component, start with an element + class namespace (prefer class names over ids), prefer direct descendant selectors by default, and use as little specificity as possible. Here is a good example:
-    
-    <ul class="category-list">
-      <li class="item">Category 1</li>
-      <li class="item">Category 2</li>
-      <li class="item">Category 3</li>
-    </ul>
-
-
-### CSS Specificity guidelines
-
-* If you must use an id selector (#selector) make sure that you have no more than one in your rule declaration. A rule like #header .search #quicksearch { ... } is considered harmful.
-* When modifying an existing element for a specific use, try to use specific class names. Instead of .listings-layout.bigger use rules like .listings-layout.listings-bigger. Think about ack/greping your code in the future.
-* The class names disabled, mousedown, danger, hover, selected, and active should always be namespaced by a class (button.classy.selected is a good example).
-
-
-### ID attributes
-
-Using ID attributes in our HTML can be a good thing and in some cases, absolutely necessary. For example, they provide efficient hooks for JavaScript. For CSS, however, ID selectors aren’t necessary as the performance difference between ID and class selectors is nearly non-existent and can make styling more complicated due to increasing specificity.
-
+When defining the rule set for a module, **avoid using IDs and element selectors**, sticking **only to class names**. A module will likely contain a number of elements and there is likely to be a desire to use descendent or child selectors to target those elements.
 
 ### Avoid element selectors
 
@@ -156,11 +152,11 @@ Use child or descendant selectors with element selectors if the element selector
 
 If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
 
-
 ### Only include a selector that includes semantics
 
 A span or div holds none. A heading has some. A class defined on an element has plenty. By adding the classes to the elements, we have increased the semantics of what those elements mean and removed any ambiguity when it comes to styling them.
 
+If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
 
 ### Subclassing Modules
 
@@ -170,11 +166,22 @@ With sub-classing the module, both the base module and the sub-module class name
 
 While more specific layout components assigned with IDs could be used to provide specialized styling for modules, sub-classing the module will allow the module to be moved to other sections of the site more easily and you will avoid increasing the specificity unnecessarily.
 
-
 ### Using !important
 
-We have to be cautious. Leave !important off until you actually and truly need it. 
+Be cautious. Leave !important off until you **actually** and **truly** need it.
 
+## Media Queries
+
+> The point is that you want to have a system that is responsive.<br/>
+> -- Bill Joy
+
+Media queries are an approach to managing state change. A media query, depending on the file size, can be defined as a separate partial file, or it can be defined within a @media block within a specific style sheet (at the bottom).
+
+The intent is to keep the styles that pertain to a specific layout or module with the rest of these. We declare 2 redlines for three versions in our websites, 640px and 960px:
+
+* Viewport < 640px (Mobile version).
+* 641px < Viewport < 960px (Tablet version).
+* 961px < Viewport (Desktop version).
 
 ## Declaration Order
 
