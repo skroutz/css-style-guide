@@ -8,6 +8,9 @@ Definitely, there is no "one true way" for developing large-scale websites. Afte
 
 This is an attempt to document a consistent approach to site development when using CSS. Feel free to take this in its entirety or use only the parts that work best for you and your team.
 
+This is the guide we use for own apps internally at [Skroutz](http://www.skroutz.gr).
+
+It contains a mashup of ideas from the [Github CSS styleguide](https://github.com/styleguide/css) and the [Scalable and Modular Architecture for CSS guide](http://smacss.com/) (SMACSS for short), with some sprinkle from the [Google CSS styleguide](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml).
 
 ## Table of Contents
 
