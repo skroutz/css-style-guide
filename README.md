@@ -73,7 +73,7 @@ When styling a component, start with an element + class namespace (prefer class 
 </ul>
 ```
 
-```CSS
+```SCSS
 ul.category-list { // element + class namespace
 
   &>li { // direct descendant selector > for list items
