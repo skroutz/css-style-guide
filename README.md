@@ -4,9 +4,9 @@
 > the answer to most questions is “it depends”.<br/>
 > -- Snooca
 
-Definitely, there is not "one true way" of developing right large-scale websites. After having build websites on a large scale, we have discover some techniques that can keep CSS organized and structured, leading to code that is easier to build and maintain.
+Definitely, there is no "one true way" for developing large-scale websites. After having built several large-scale websites, we have discovered some techniques that help in keeping CSS organized and structured, leading to code that is both easier to read and maintain.
 
-This is an attempt to document a consistent approach to site development when using CSS. Feel free to take this in its entirety or use only the parts that work best for you. Or don’t use it at all. 
+This is an attempt to document a consistent approach to site development when using CSS. Feel free to take this in its entirety or use only the parts that work best for you and your team.
 
 
 ## Table of Contents
@@ -32,23 +32,23 @@ This is an attempt to document a consistent approach to site development when us
 ## File Organization
 
 > Don't agonize. Organize.<br/>
-> -- Florynce Kennedy 
+> -- Florynce Kennedy
 
-At the very core of CSS Architecture is categorization. At Skroutz.gr, there are three types of categories:
+At the very core of CSS Architecture is categorization. We have three types of categories:
 
 * [Base Rules](#base-rules)
 * [Layouts Rules](#layouts-rules)
 * [Module Rules](#module-rules)
 
-Each category has certain guidelines that apply to it. This somewhat succinct separation allows us to ask ourselves questions during the development process. How are we going to code things and why are we going to code them that way?
+Each category has certain guidelines that apply to it. This somewhat succinct separation allows us to ask ourselves questions during the development process. _How_ are we going to code things and _why_ are we going to code them that way?
 
-Much of the purpose of categorizing things is to codify patterns—things that repeat themselves within our design. Repetition results in less code, easier maintenance, and greater consistency in the user experience. These are all wins. Exceptions to the rule can be advantageous but they should be justified.
+Much of the purpose of categorizing things is to codify patterns—things that repeat themselves within our design. Repeating the same process results in less code, easier maintenance, and greater consistency in the user experience. These are all wins. Exceptions to the rule can be advantageous but they should be justified.
 
-Base rules are the defaults. They are almost exclusively single element selectors but it could include attribute selectors, pseudo-class selectors, child selectors or sibling selectors.
+* Base rules are the **defaults**. They are almost exclusively single element selectors but could include attribute selectors, pseudo-class selectors, child selectors or sibling selectors.
 
-Layout rules divide the page into sections. Layouts hold one or more modules together.
+* Layout rules divide the page into sections. Layouts hold one or more modules together.
 
-Modules are the reusable, modular parts of our design. They are the callouts, the sidebar sections, the product lists and so on.
+* Modules are the reusable, modular parts of our design. They are the callouts, the sidebar sections, the product lists and so on.
 
 In general, the CSS file organization should follow something like this:
 
@@ -71,14 +71,13 @@ In general, the CSS file organization should follow something like this:
 
 ### Base Rules
 
-A Base rule is applied to an element using an element selector, a descendent selector, or a child selector, along with any pseudo-classes. It doesn’t include any class or ID selectors. It is defining the default styling for how that element should look in all occurrences on the page.
+A Base rule is applied to an element using an element selector, a descendant selector, or a child selector, along with any pseudo-classes. Base rules **shouldn't include any class or ID selectors**. They define the default styling for how that element should look in all occurrences on the page.
 
-Base styles include setting resets, heading sizes, default link styles, default font styles, and body backgrounds. There should be no need to use!important in a Base style.
-
+Base styles include setting resets, heading sizes, default link styles, default font styles, and body backgrounds. There should be no need to use `!important` in a Base style.
 
 ### Layouts Rules
 
-Layout styles dictating the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as header and footer are traditionally styled using ID selectors. Generally, a Layout style only has a single selector: a single ID or class name. 
+Layout styles dictate the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as headers and footers are traditionally styled using ID selectors. Generally, a Layout style **has only a single selector**: a single ID or class name. 
 
 
 ### Module Rules
@@ -135,7 +134,7 @@ Using ID attributes in our HTML can be a good thing and in some cases, absolutel
 
 ### Avoid element selectors
 
-Use child or descendant selectors with element selectors if the element selectors will and can be predictable. Using .class span is great if a span will predictably be used and styled the same way every time while within that module. The problem is that as a project grows in complexity, the more likely that you will need to expand a component’s functionality and the more limited you will be in having used such a generic element within your rule.
+Use child or descendant selectors with element selectors if the element selectors will and can be predictable. Using `.class` span is great if a span will predictably be used and styled the same way every time while within that module. The problem is that as a project grows in complexity, the more likely that you will need to expand a component’s functionality and the more limited you will be, having used such a generic element within your rule.
 
 If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
 
