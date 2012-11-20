@@ -21,15 +21,27 @@ It contains a mashup of ideas from the [Github CSS styleguide](https://github.co
 * [Declaration Order](#declaration-order)
 * [Misc](#misc)
 
-
 ## Coding Style
 
 * Use soft-tabs with a two space indent.
-* Put spaces after : in property declarations.
-* Put spaces before { in rule declarations.
-* Add ; in last rule.
-* Use hex color codes #000 unless using rgba.
-* Use // for comment blocks (instead of /* */).
+* Put spaces after `:` in property declarations.
+* Put spaces before `{` in rule declarations.
+* Use a semicolon `;` after every declaration. Even the last one.
+* Use hex color codes `#000` unless using rgba.
+* Use `//` for comment blocks (instead of `/* */`).
+* Use shorthand properties where possible.
+* Seperate rules by new lines.
+
+Here is a good example syntax:
+
+```CSS
+// This is a good example!
+.styleguide-format {
+  border: 1px solid #0f0
+  color: #000;
+  background: rgba(0,0,0,0.5);
+}
+```
 
 
 ## File Organization
