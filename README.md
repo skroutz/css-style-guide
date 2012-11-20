@@ -43,6 +43,10 @@ Here is a good example syntax:
 }
 ```
 
+### Pixels vs. Ems
+
+Use `px` for `font-size`, because it offers absolute control over text. Additionally, unit-less `line-height` is preferred because it does not inherit a percentage value of its parent element, but instead is based on a multiplier of the `font-size`.
+
 
 ## File Organization
 
