@@ -194,7 +194,7 @@ The most popular way to order CSS properties is grouped by type. Our preference 
 
 We use [CSSComb](http://csscomb.com) to order our styles. Please install the appropriate version for your editor.
 
-Our order preference is defined in the [csscomb-default-style.json](blob/master/csscomb/csscomb-default-style.json) JSON file. You have to configure your editor to use this style (by passing the `-s` option).
+Our order preference is defined in the [csscomb-default-style.json](/skroutz/css-style-guide/blob/master/csscomb/csscomb-default-style.json) JSON file. You have to configure your editor to use this style (by passing the `-s` option).
 
 ## Misc
 
