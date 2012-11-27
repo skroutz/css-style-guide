@@ -24,6 +24,7 @@ It contains a mashup of ideas from the [Github CSS styleguide](https://github.co
   * [Module Rules](#module-rules)
 * [Media Queries](#media-queries)
 * [Declaration Order](#declaration-order)
+  * [Sublime Instructions](#sublime-instructions)
 * [Misc](#misc)
 
 ## Coding Style
@@ -195,6 +196,22 @@ The most popular way to order CSS properties is grouped by type. Our preference 
 We use [CSSComb](http://csscomb.com) to order our styles. Please install the appropriate version for your editor.
 
 Our order preference is defined in the [csscomb-default-style.json](/skroutz/css-style-guide/blob/master/csscomb/csscomb-default-style.json) JSON file. You have to configure your editor to use this style (by passing the `-s` option).
+
+### Sublime Instructions
+
+ * Install the csscomb package
+   * Open `Preferences`, `Package Control` then choose `Install Package`
+   * Select `CSScomb`
+ * Go to the CSScomb package folder
+   * Linux: `~/.config/sublime-text-2/Packages/CSScomb/csscomb/libs`
+ * Download the [csscomb-default-style.json](/skroutz/css-style-guide/blob/master/csscomb/csscomb-default-style.json) in this folder
+   * `$ wget https://raw.github.com/skroutz/css-style-guide/master/csscomb/csscomb-default-style.json`
+ * Edit `call_script.php` and make it load the default style JSON
+   * `$ vim call_script.php`
+ * Change the 3rd argument of the $csscomb->csscomb() call in order to load and use the default style, i.e. change
+   `$csscomb->csscomb($argv[1], false, null);`
+   to
+   `$csscomb->csscomb($argv[1], false, file_get_contents('csscomb-default-style.json'));`
 
 ## Misc
 
