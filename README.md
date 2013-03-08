@@ -142,26 +142,28 @@ Organization for layout and module should follow something like this:
     │   ├── layout2.scss
     │   └── ...
     └── partials
-        ├── header.scss
-        ├── header_tablet.scss
-        ├── header_mobile.scss
-        ├── header_retina.scss
-        ├── header_ie9.scss
-        └── header_ie8.scss
-        ├── footer.scss
-        ├── module.scss
-        |── el
-        |   |── partials
-        |   |   |── header.scss
-        |   |   |── footer.scss
-        |   |   └── ...
-        |   tr
-        |   |── partials
-        |   |   |── header.scss
-        |   |   |── footer.scss
-        |   |   └── ...
-        |   └── ...
-        └── ...
+    |   ├── header.scss
+    |   ├── header_tablet.scss
+    |   ├── header_mobile.scss
+    |   ├── header_retina.scss
+    |   ├── header_ie9.scss
+    |   └── header_ie8.scss
+    |   ├── footer.scss
+    |   ├── module.scss
+    |   └── ...
+    |── el
+    |   ├── partials
+    |   |   |── header.scss
+    |   |   |── footer.scss
+    |   |   └── ...
+    |   └── ...
+    |── tr
+    |   ├── partials
+    |   |   |── header.scss
+    |   |   |── footer.scss
+    |   |   └── ...
+    |   └── ...
+    └── ...
 
 ### Base Rules
 
