@@ -132,29 +132,36 @@ In general, the CSS file organization should follow something like this:
         ├── module.scss
         └── ...
 
-Furthermore, we break the CSS files to partials in a similar fashion, for supporting responsive styles (**tablet** and **mobile** viewports), cross browsing styles (**IE9** and **IE8**) and **Internationalized** adjustments as well. Deepest organization should follow something like this:
+Furthermore, we split module CSS files into partials, for supporting responsive styles (such as **tablet** and **mobile** viewports), cross browsing styles (such as **IE9** and **IE8**) and **localization** (L10n) adjustments as well. Not every module or partial has a respective responsive partial or localized version.
 
-    general rules (desktop)
-    ├── style1.scss
-    │   ├── style1_tablet.scss
-    │   ├── style1_mobile.scss
-    │   ├── style1_retina.scss
-    │   ├── style1_ie9.scss
-    │   └── style1_ie8.scss
-    ├── style2.scss
-    │   ├── style2_tablet.scss
-    │   ├── style2_mobile.scss
-    │   ├── style2_retina.scss
-    │   ├── style2_ie9.scss
-    │   └── style2_ie8.scss
-    ├── style3.scss
-    │
-    ├── localized rules
-    │   ├── style1.scss
-    │   ├── style2.scss
+Organization for layout and module should follow something like this:
+
+    styles
+    ├── layouts
+    │   ├── layout1.scss
+    │   ├── layout2.scss
     │   └── ...
-    ├── style4.scss
-    └── ...
+    └── partials
+        ├── header.scss
+        ├── header_tablet.scss
+        ├── header_mobile.scss
+        ├── header_retina.scss
+        ├── header_ie9.scss
+        └── header_ie8.scss
+        ├── footer.scss
+        ├── module.scss
+        |── el
+        |   |── partials
+        |   |   |── header.scss
+        |   |   |── footer.scss
+        |   |   └── ...
+        |   tr
+        |   |── partials
+        |   |   |── header.scss
+        |   |   |── footer.scss
+        |   |   └── ...
+        |   └── ...
+        └── ...
 
 ### Base Rules
 
@@ -205,18 +212,22 @@ Be cautious. Leave !important off until you **actually** and **truly** need it.
 > The point is that you want to have a system that is responsive.<br/>
 > -- Bill Joy
 
-Media queries are an approach to managing state change. A media query, ~~depending on the file size, can be defined as a separate partial file, or~~ it can be defined within a @media block within a specific style sheet (at the bottom).
+Media queries are an approach to managing state change. A media query, should be defined within a @media block within a specific style sheet (at the bottom).
 
-~~The intent is to keep the styles that pertain to a specific layout or module with the rest of these.~~ We declare 2 redlines for three versions in our websites, 640px and 960px:
+The intent is to keep the styles that pertain to a specific layout or module in a logically grouped way. We declare 2 redlines for three versions in our websites, 640px and 960px:
 
 * Viewport < 640px (Mobile version).
 * 641px < Viewport < 960px (Tablet version).
 * 961px < Viewport (Desktop version).
 
-Media Queries suffixes we use, are the following:
+Media queries suffixes we use, are the following:
 
 * _tablet.scss (Tablet version).
 * _mobile.scss (Mobile version).
+
+We also use media queries to distinguish between [HiDPI displays](http://en.wikipedia.org/wiki/Retina_Display) (aka. Retina displays) and normal displays:
+
+* _retina.scss (Retina version).
 
 ## Declaration Order
 
