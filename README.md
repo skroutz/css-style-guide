@@ -77,7 +77,7 @@ When styling a component, start with an element + class namespace (prefer class 
 ```SCSS
 ul.category-list { // element + class namespace
 
-  &>li { // direct descendant selector > for list items
+  & > li { // direct descendant selector > for list items
     list-style-type: disc;
   }
 
@@ -132,6 +132,30 @@ In general, the CSS file organization should follow something like this:
         ├── module.scss
         └── ...
 
+Furthermore, we break the CSS files to partials in a similar fashion, for supporting responsive styles (**tablet** and **mobile** viewports), cross browsing styles (**IE9** and **IE8**) and **Internationalized** adjustments as well. Deepest organization should follow something like this:
+
+    general rules (desktop)
+    ├── style1.scss
+    │   ├── style1_tablet.scss
+    │   ├── style1_mobile.scss
+    │   ├── style1_retina.scss
+    │   ├── style1_ie9.scss
+    │   └── style1_ie8.scss
+    ├── style2.scss
+    │   ├── style2_tablet.scss
+    │   ├── style2_mobile.scss
+    │   ├── style2_retina.scss
+    │   ├── style2_ie9.scss
+    │   └── style2_ie8.scss
+    ├── style3.scss
+    │
+    ├── localized rules
+    │   ├── style1.scss
+    │   ├── style2.scss
+    │   └── ...
+    ├── style4.scss
+    └── ...
+
 ### Base Rules
 
 A Base rule is applied to an element using an element selector, a descendant selector, or a child selector, along with any pseudo-classes. Base rules **shouldn't include any class or ID selectors**. They define the default styling for how that element should look in all occurrences on the page.
@@ -181,13 +205,18 @@ Be cautious. Leave !important off until you **actually** and **truly** need it.
 > The point is that you want to have a system that is responsive.<br/>
 > -- Bill Joy
 
-Media queries are an approach to managing state change. A media query, depending on the file size, can be defined as a separate partial file, or it can be defined within a @media block within a specific style sheet (at the bottom).
+Media queries are an approach to managing state change. A media query, ~~depending on the file size, can be defined as a separate partial file, or~~ it can be defined within a @media block within a specific style sheet (at the bottom).
 
-The intent is to keep the styles that pertain to a specific layout or module with the rest of these. We declare 2 redlines for three versions in our websites, 640px and 960px:
+~~The intent is to keep the styles that pertain to a specific layout or module with the rest of these.~~ We declare 2 redlines for three versions in our websites, 640px and 960px:
 
 * Viewport < 640px (Mobile version).
 * 641px < Viewport < 960px (Tablet version).
 * 961px < Viewport (Desktop version).
+
+Media Queries suffixes we use, are the following:
+
+* _tablet.scss (Tablet version).
+* _mobile.scss (Mobile version).
 
 ## Declaration Order
 
