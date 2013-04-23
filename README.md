@@ -140,38 +140,35 @@ Organization for layout and module should follow something like this:
     ├── layouts
     │   ├── layout1.scss
     │   ├── layout2.scss
-    │   ├── .....
-    │   ├── .....
+    │   ├── ...
     │   ├── el
     │   │   ├── layout1.scss
     │   │   └── ...
     │   ├── tr
     │   │   ├── layout1.scss
     │   │   └── ...
-    │   ├── ...
     │   └── ...
     ├── partials
-    │    ├── header.scss
-    │    ├── header_tablet.scss
-    │    ├── header_mobile.scss
-    │    ├── header_retina.scss
-    │    ├── header_ie9.scss
-    │    ├── header_ie8.scss
-    │    ├── footer.scss
-    │    ├── module.scss
-    │    ├── el
-    │    │   ├── header.scss
-    │    │   ├── header_tablet.scss
-    │    │   └── ...
-    │    ├── tr
-    │    │   ├── header.scss
-    │    │   ├── header_tablet.scss
-    │    │   └── ...
-    │    ├── ...
-    │    └── ...
-    └── modules
-         ├── ...
-         └── ...
+    │   ├── header.scss
+    │   ├── header_tablet.scss
+    │   ├── header_mobile.scss
+    │   ├── header_retina.scss
+    │   ├── header_ie9.scss
+    │   ├── header_ie8.scss
+    │   ├── footer.scss
+    │   ├── module.scss
+    │   ├── el
+    │   │   ├── header.scss
+    │   │   ├── header_tablet.scss
+    │   │   └── ...
+    │   ├── tr
+    │   │   ├── header.scss
+    │   │   ├── header_tablet.scss
+    │   │   └── ...
+    │   └── ...
+    ├── modules
+    |   └── ...
+    └── ...
 
 ### Base Rules
 
