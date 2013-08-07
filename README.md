@@ -16,6 +16,7 @@ It contains a mashup of ideas from the [Github CSS styleguide](https://github.co
 
 * [Coding Style](#coding-style)
   * [Pixels vs. Ems](#pixels-vs-ems)
+  * [Variables](#variables)
 * [Specificity](#specificity)
   * [CSS Specificity guidelines](#css-specificity-guidelines)
 * [File Organization](#file-organization)
@@ -52,6 +53,35 @@ Here is a good example syntax:
 ### Pixels vs. Ems
 
 Use `px` for `font-size`, because it offers absolute control over text. Additionally, unit-less `line-height` is preferred because it does not inherit a percentage value of its parent element, but instead is based on a multiplier of the `font-size`.
+
+### Variables
+
+ * Define color variables in `_general.scss`.
+ * Use the color variables and don't use hardcoded hex triplets directly in CSS files.
+ * Colors should follow the [Color Naming Scheme](http://en.wikipedia.org/wiki/Color_Naming_System) notation.
+ * Consult the [BNF syntax](http://people.csail.mit.edu/jaffer/Color/CNS-syntax) and [see the explanation](http://www.xanthir.com/blog/b4JS10).
+ * Define descriptive colors and then [define functional areas](http://sachagreif.com/sass-color-variables/) that use them.
+
+Here is a good example of variable usage:
+
+```SCSS
+// This is a good example of variable usage!
+$grey: #707070;
+$dark-grey: #666666;
+
+$text-color: $grey;
+$link-color: $grey;
+$border-color: $dark-grey;
+
+.class {
+  color: $text-color;
+  border-color: $border-color;
+}
+
+a {
+  color: $link-color;
+}
+```
 
 ## Specificity
 
