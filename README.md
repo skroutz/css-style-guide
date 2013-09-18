@@ -281,7 +281,7 @@ Our order preference is defined in the [csscomb-default-style.json](/skroutz/css
    * Select `CSScomb`
  * Go to the CSScomb package folder
    * Linux: `~/.config/sublime-text-2/Packages/CSScomb/csscomb/libs`
- * Download the [csscomb-default-style.json](/skroutz/css-style-guide/blob/master/csscomb/csscomb-default-style.json) in this folder
+ * Download the [csscomb-default-style.json](/csscomb/csscomb-default-style.json) in this folder
    * `$ wget https://raw.github.com/skroutz/css-style-guide/master/csscomb/csscomb-default-style.json`
  * Edit `call_script.php` and make it load the default style JSON
    * `$ vim call_script.php`
