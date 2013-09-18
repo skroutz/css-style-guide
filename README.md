@@ -288,7 +288,7 @@ Our order preference is defined in the [csscomb-default-style.json](/skroutz/css
  * Change the 3rd argument of the $csscomb->csscomb() call in order to load and use the default style, i.e. change
    `$csscomb->csscomb($argv[1], false, null);`
    to
-   `$csscomb->csscomb($argv[1], false, file_get_contents('csscomb-default-style.json'));`
+   `$csscomb->csscomb($argv[1], false, file_get_contents('csscomb-default-style.json', true));`
 
 ## Misc
 
