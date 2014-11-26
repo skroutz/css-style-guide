@@ -4,51 +4,137 @@
 > the answer to most questions is “it depends”.<br/>
 > -- Snooca
 
-Definitely, there is no "one true way" for developing large-scale websites. After having built several large-scale websites, we have discovered some techniques that help in keeping CSS organized and structured, leading to code that is both easier to read and maintain.
-
-This is an attempt to document a consistent approach to site development when using CSS. Feel free to take this in its entirety or use only the parts that work best for you and your team.
+Welcome to [Skroutz](http://www.skroutz.gr) CSS Styleguide. Here are some techniques that help us in keeping CSS organised and structured, leading to code that is both easier to read and maintain.
 
 This is the guide we use internally, for our own apps, at [Skroutz](http://www.skroutz.gr).
 
-It contains a mashup of ideas from the [Github CSS styleguide](https://github.com/styleguide/css) and the [Scalable and Modular Architecture for CSS guide](http://smacss.com/) (SMACSS for short), with some sprinkle from the [Google CSS styleguide](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml).
+This guide contains a mashup of ideas from the [Github CSS styleguide](https://github.com/styleguide/css) and the [Scalable and Modular Architecture for CSS guide](http://smacss.com/) (SMACSS for short), with some sprinkle from the [Google CSS styleguide](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml).
 
 ## Table of Contents
 
 * [Coding Style](#coding-style)
+  * [Formating](#formating)
+  * [Comments](#comments)
+* [Coding Preferences](#coding-preferences)
   * [Pixels vs. Ems](#pixels-vs-ems)
   * [Variables](#variables)
 * [Specificity](#specificity)
   * [CSS Specificity guidelines](#css-specificity-guidelines)
-* [File Organization](#file-organization)
-  * [Base Rules](#base-rules)
-  * [Layout Rules](#layout-rules)
-  * [Module Rules](#module-rules)
 * [Media Queries](#media-queries)
 * [Declaration Order](#declaration-order)
-  * [Sublime Instructions](#sublime-instructions)
+* [File Organization](#file-organization)
+* [Framework](#framework)
 * [Misc](#misc)
 
 ## Coding Style
 
+### Spacing
+
 * Use soft-tabs with a two space indent.
-* Put spaces after `:` in property declarations.
-* Put spaces before `{` in rule declarations.
-* Use a semicolon `;` after every declaration. Even the last one.
-* Use hex color codes `#000` unless using rgba.
-* Use `//` for comment blocks (instead of `/* */`).
-* Use shorthand properties where possible.
+* Put spaces after  colon `:` in property declarations.
+* Put spaces before curly bracket `{` in rule declarations.
+* Put spaces after comma `,`.
 * Seperate rules by new lines.
+
+### Formating
+
+* Use a semicolon `;` after every declaration. Even the last one.
+* Properties within rule sets should each reside on their own line.
+* Use hex color codes `#000` instead of using rgb.
+* Ideally try to use color variables from skroutz color palette instead of hex or rgb.
+* Use shorthand properties where possible.
+* When grouping selectors, keep individual selectors to a single line.
+* Avoid specifying units for zero values, e.g., `margin: 0;` instead of `margin: 0px;`.
+* Prefer `border: 0` over `border: none`.
+* Prefer `color: #fff` instead of `color: white`.
+* Strip out the zero for decimal number, prefer `.5s` over `0.5s`.
+* Try to use single `'` quotes instead of double quotes`”`. In rare situtations where both needed inner quotes should always be single.
+* Attributes selector should always be enclosed within quotes (Bad example: `[type=submit]`, Good example: `[type='submit']`
+* Set a limit of 80 characters width at CSS files.
+* try to set a max nesting limit of 3 levels.
+* Use `//` for comment blocks instead of `/* */`.
+* Always include mixins at top of any other css properties.
+* Always add an empty line between nesting block (even if it hasn’t any properties).
+* Parentheses should not be padded with spaces, also try not to add a space after mixin name (Bad example: `@include animation ( blur 1s linear )`, Good example: `@include animation(blur 1s linear)`).
+
 
 Here is a good example syntax:
 
-```CSS
-// This is a good example!
-.styleguide-format {
-  border: 1px solid #0f0
+```SCSS
+/* This is a good CSS example! */
+
+.foo {
+  border: 1px solid #0f0;
   color: #000;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, .5);
 }
 ```
+
+```SCSS
+// This is a good SCSS example!
+
+.foo {
+  @include transform(rotate(90deg));
+  @include transition(transform .5s linear);
+  color: $orange;
+  font-size: 13px;
+
+  &:hover {
+    color: $red;
+  }
+}
+```
+
+### Comments
+
+Try not to use CSS comments, instead use SASS comments for your comment block. We separate comments into 3 categories: descriptions, block titles and hints.
+
+#### Description comments
+
+Description comments are usually  needed to provide more informations about a css block. So description comments should always appear in a new line above the code block, and should always follow by a new line as well.
+
+```SCSS
+
+// If supports line-clamp then add an ellipsis overflow and hide the gradient
+// This will work in Chrome and latest Opera, otherwise a gradient will
+// gradually hide the text.
+
+.foo {
+  ...
+}
+```
+
+#### Block Title comments
+
+Block titles are used to organise style blocks according to their content. Should always follow by a new line right bellow and contain 2 new lines above them.
+
+```SCSS
+.foo {
+
+
+  // bar styles
+
+  .bar {
+  ...
+  }
+}
+```
+
+#### Hints comments
+
+Hints comments are usually needed to provide a short hint for a specific propertie. Hints comments should always appear in the same line with the css properties.
+
+```SCSS
+.foo {
+
+  &:before {
+    content: ‘\805’; // Icon star
+    ...
+  }
+}
+```
+
+## Coding Preferences
 
 ### Pixels vs. Ems
 
@@ -56,31 +142,25 @@ Use `px` for `font-size`, because it offers absolute control over text. Addition
 
 ### Variables
 
- * Define color variables in `_general.scss`.
- * Use the color variables and don't use hardcoded hex triplets directly in CSS files.
- * Colors should follow the [Color Naming Scheme](http://en.wikipedia.org/wiki/Color_Naming_System) notation.
- * Consult the [BNF syntax](http://people.csail.mit.edu/jaffer/Color/CNS-syntax) and [see the explanation](http://www.xanthir.com/blog/b4JS10).
- * Define descriptive colors and then [define functional areas](http://sachagreif.com/sass-color-variables/) that use them.
+Sass variables can be extremely powerful and helpful. Think of variables as a way to store information that you want to reuse throughout your stylesheet. You can store things like colors, fonts, or any CSS value you think you'll want to reuse throughout the site.
 
-Here is a good example of variable usage:
+* Define color variables in `framework/_colors.scss`.
+* Use the color variables and don't use hardcoded hex triplets directly in CSS files.
+* Define font variables in `framework/_fonts.scss`. Currently, we mainly use `Verdana`, but you can also use `Georgia` and `Arial`.
+* Try to use semantic names for your variables (Good examples: `$black: #000;`, `$arial: Arial, Helvetica, sans-serif;`).
+* Try to use colors that we already use and if you want to use one that we don’t, you can add it in variables as long as we will need it again.
+* If there is a variable that you want to use in a specific file and we don’t use it in general, define it at the top of the file (ex. `$facebook: #4363ac;` in `framework/_buttons.scss`)
 
 ```SCSS
-// This is a good example of variable usage!
-$grey: #707070;
-$dark-grey: #666666;
+// a BAD example
 
-$text-color: $grey;
-$link-color: $grey;
-$border-color: $dark-grey;
+$active: #333;
+$width: 10px;
 
-.class {
-  color: $text-color;
-  border-color: $border-color;
-}
+// a GOOD example
 
-a {
-  color: $link-color;
-}
+$active-link-color: #333;
+$border-width: 10px;
 ```
 
 ## Specificity
@@ -90,135 +170,34 @@ a {
 
 Elements that occur **exactly once** inside a page should use IDs, otherwise, use classes. When in doubt, use a class name.
 
-  * **Good** candidates for ids: header, footer, modal popups.
+  * **Good** candidates for ids: header, footer, main.
   * **Bad** candidates for ids: navigation, item listings, item view pages (ex: issue view).
 
-When styling a component, start with an element + class namespace (prefer class names over ids), prefer direct descendant selectors by default, and use as little specificity as possible. Here is a good example:
-
-```HTML
-<!-- This is a good example -->
-<ul class="category-list">
-  <li class="item">Category 1</li>
-  <li class="item">Category 2</li>
-  <li class="item">Category 3</li>
-</ul>
-```
+When styling a component, prefer class names over ids, prefer direct descendant selectors by default, and use as little specificity as possible. Here is a good example:
 
 ```SCSS
-ul.category-list { // element + class namespace
+.category-list {
 
-  & > li { // direct descendant selector > for list items
+  & > li {
     list-style-type: disc;
   }
 
-  a { // minimal specificity for all links
-    color: #ff0000;
+  a {
+    color: $grey;
   }
 }
 ```
 
 ### CSS Specificity guidelines
 
-* If you must use an id selector (`#selector`) make sure that you have no more than _one_ in your rule declaration. A rule like `#header .search #quicksearch { ... }` is considered harmful.
+* If you must use an id selector (`#selector`) make sure that you have no more than one in your rule declaration. A rule like `#header .search #quicksearch { ... }` is considered harmful.
+* Never reference js- prefixed class names from CSS files. js- are used exclusively from JS files.
 * When modifying an existing element for a specific use, try to use specific class names. Instead of `.listings-layout.bigger` use rules like `.listings-layout.listings-bigger`. Think about `ack/grep`ing your code in the future.
-* The class names `disabled`, `mousedown`, `danger`, `hover`, `selected`, and `active` should _always_ be namespaced by a class (`button.classy.selected` is a good example).
+* The class names `disabled`, `mousedown`, `danger`, `selected`, and `active` should **always** be namespaced by a class (`button.selected` is a good example).
 
-## File Organization
-
-> Don't agonize. Organize.<br/>
-> -- Florynce Kennedy
-
-At the very core of CSS Architecture is categorization. We have three types of categories:
-
-* [Base Rules](#base-rules)
-* [Layouts Rules](#layouts-rules)
-* [Module Rules](#module-rules)
-
-Each category has certain guidelines that apply to it. This somewhat succinct separation allows us to ask ourselves questions during the development process. _How_ are we going to code things and _why_ are we going to code them that way?
-
-Much of the purpose of categorizing things is to codify patterns—things that repeat themselves within our design. Repeating the same process results in less code, easier maintenance, and greater consistency in the user experience. These are all wins. Exceptions to the rule can be advantageous but they should be justified.
-
-* Base rules are the **defaults**. They are almost exclusively single element selectors but could include attribute selectors, pseudo-class selectors, child selectors or sibling selectors.
-
-* Layout rules divide the page into sections. Layouts hold one or more modules together.
-
-* Modules are the reusable, modular parts of our design. They are the callouts, the sidebar sections, the product lists and so on.
-
-In general, the CSS file organization should follow something like this:
-
-    styles
-    ├── base
-    │   ├── reset.scss
-    │   ├── functions.scss
-    │   └── general.scss
-    ├── layouts
-    │   ├── layout1.scss
-    │   ├── layout2.scss
-    │   └── ...
-    └── modules
-        ├── header.scss
-        ├── footer.scss
-        ├── module.scss
-        ├── module.scss
-        └── ...
-
-Furthermore, we split module CSS files into partials, for supporting responsive styles (such as **tablet** and **mobile** viewports), cross browsing styles (such as **IE9** and **IE8**) and **localization** (L10n) adjustments as well. Not every module or partial has a respective responsive partial or localized version.
-
-Organization for layout and module should follow something like this:
-
-    styles
-    ├── layouts
-    │   ├── layout1.scss
-    │   ├── layout2.scss
-    │   ├── ...
-    │   ├── el
-    │   │   ├── layout1.scss
-    │   │   └── ...
-    │   ├── tr
-    │   │   ├── layout1.scss
-    │   │   └── ...
-    │   └── ...
-    ├── partials
-    │   ├── header.scss
-    │   ├── header_tablet.scss
-    │   ├── header_mobile.scss
-    │   ├── header_retina.scss
-    │   ├── header_ie9.scss
-    │   ├── header_ie8.scss
-    │   ├── footer.scss
-    │   ├── module.scss
-    │   ├── el
-    │   │   ├── header.scss
-    │   │   ├── header_tablet.scss
-    │   │   └── ...
-    │   ├── tr
-    │   │   ├── header.scss
-    │   │   ├── header_tablet.scss
-    │   │   └── ...
-    │   └── ...
-    ├── modules
-    |   └── ...
-    └── ...
-
-### Base Rules
-
-A Base rule is applied to an element using an element selector, a descendant selector, or a child selector, along with any pseudo-classes. Base rules **shouldn't include any class or ID selectors**. They define the default styling for how that element should look in all occurrences on the page.
-
-Base styles include setting resets, heading sizes, default link styles, default font styles, and body backgrounds. There should be no need to use `!important` in a Base style.
-
-### Layouts Rules
-
-Layout styles dictate the major and minor components of a page. They can also be divided into major and minor styles based on reuse. Major layout styles such as headers and footers are traditionally styled using ID selectors. Generally, a Layout style **has only a single selector**: a single ID or class name.
-
-#### Using ID selectors
+#### ID selectors
 
 Using ID attributes in our HTML can be a good thing and in some cases, absolutely necessary. For example, they provide efficient hooks for JavaScript. For CSS, however, ID selectors aren’t necessary as the performance difference between ID and class selectors is nearly non-existent and can make styling more complicated due to increasing specificity.
-
-### Module Rules
-
-A Module is a more discrete component of the page. Modules sit inside Layout components or can sometimes sit within other Modules, too. Each Module should be designed to exist as a standalone component. In doing so, the page will be more flexible. If done right, Modules can easily be moved to different parts of the layout without breaking.
-
-When defining the rule set for a module, **avoid using IDs and element selectors**, sticking **only to class names**. A module will likely contain a number of elements and there is likely to be a desire to use descendent or child selectors to target those elements.
 
 #### Avoid element selectors
 
@@ -231,18 +210,6 @@ If you do wish to use an element selector, it should be within one level of a cl
 A span or div holds none. A heading has some. A class defined on an element has plenty. By adding the classes to the elements, we have increased the semantics of what those elements mean and removed any ambiguity when it comes to styling them.
 
 If you do wish to use an element selector, it should be within one level of a class selector. In other words, you should be in a situation to use child selectors.
-
-#### Subclassing Modules
-
-When we have the same module in different sections, the first instinct is to use a parent element to style that module differently. The problem with this approach is that you can run into specificity issues that require adding even more selectors to battle against it or to quickly fall back to using !important.
-
-With sub-classing the module, both the base module and the sub-module class names get applied to the HTML element. Try to avoid conditional styling based on location. If you are changing the look of a module for usage elsewhere on the page or site, sub-class the module instead.
-
-While more specific layout components assigned with IDs could be used to provide specialized styling for modules, sub-classing the module will allow the module to be moved to other sections of the site more easily and you will avoid increasing the specificity unnecessarily.
-
-#### Using !important
-
-Be cautious. Leave !important off until you **actually** and **truly** need it.
 
 ## Media Queries
 
@@ -270,25 +237,51 @@ We also use media queries to distinguish between [HiDPI displays](http://en.wiki
 
 The most popular way to order CSS properties is grouped by type. Our preference is for structurally important properties (e.g. positioning and box-model) to be declared prior to all others.
 
-We use [CSSComb](http://csscomb.com) to order our styles. Please install the appropriate version for your editor.
+## File Organization
 
-Our order preference is defined in the [csscomb-default-style.json](/skroutz/css-style-guide/blob/master/csscomb/csscomb-default-style.json) JSON file. You have to configure your editor to use this style (by passing the `-s` option).
+> Don't agonize. Organize.<br/>
+> -- Florynce Kennedy
 
-### Sublime Instructions
+In general, Skroutz CSS file organization should follow something like this:
 
- * Install the csscomb package
-   * Open `Preferences`, `Package Control` then choose `Install Package`
-   * Select `CSScomb`
- * Go to the CSScomb package folder
-   * Linux: `~/.config/sublime-text-2/Packages/CSScomb/csscomb/libs`
- * Download the [csscomb-default-style.json](/csscomb/csscomb-default-style.json) in this folder
-   * `$ wget https://raw.github.com/skroutz/css-style-guide/master/csscomb/csscomb-default-style.json`
- * Edit `call_script.php` and make it load the default style JSON
-   * `$ vim call_script.php`
- * Change the 3rd argument of the $csscomb->csscomb() call in order to load and use the default style, i.e. change
-   `$csscomb->csscomb($argv[1], false, null);`
-   to
-   `$csscomb->csscomb($argv[1], false, file_get_contents('csscomb-default-style.json', true));`
+    stylesheets
+    |
+    ├── framework
+    │   ├── colors.scss
+    │   ├── buttons.scss
+    │   └── ...
+    ├── partials
+    │   ├── header.scss
+    │   ├── header_tablet.scss
+    │   ├── header_mobile.scss
+    │   ├── header_retina.scss
+    │   ├── header_ie9.scss
+    │   ├── footer.scss
+    │   ├── ...
+    │   ├── el
+    │   │   ├── header.scss
+    │   │   ├── header_tablet.scss
+    │   │   └── ...
+    │   ├── tr
+    │   │   ├── header.scss
+    │   │   ├── header_tablet.scss
+    │   │   └── ...
+
+We split module CSS files into partials, for supporting responsive styles (such as **tablet** and **mobile** viewports), cross browsing styles (such as **IE9** and **IE8**) and **localization** (L10n) adjustments as well. Not every module or partial has a respective responsive partial or localized version.
+
+## Framework
+
+Skroutz Framework consists of the following reusable css partials.
+
+* Functions
+* Colors
+* Fonts
+* Buttons
+* State
+* Forms
+* Grid
+* Animations
+* Modules
 
 ## Misc
 
@@ -300,4 +293,4 @@ The point of having style guidelines is to have a common vocabulary of coding so
 
 ## Above all else
 
-Follow your :heart:
+These are some basic techniques that we currently use for our stylesheets internally at [Skroutz](http://www.skroutz.gr). Feel free to take inspiration from them.
