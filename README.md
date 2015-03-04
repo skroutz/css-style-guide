@@ -87,11 +87,11 @@ Here is a good example syntax:
 
 ### Comments
 
-Try not to use CSS comments, instead use SASS comments for your comment block. We separate comments into 3 categories: descriptions, block titles and hints.
+Try not to use CSS comments, instead use SASS comments for your comment block. We separate comments into 3 categories: descriptive, block titles and hints.
 
-#### Description comments
+#### Descriptive comments
 
-Description comments are usually  needed to provide more informations about a css block. So description comments should always appear in a new line above the code block, and should always follow by a new line as well.
+Descriptive comments are usually needed to provide more informations about a css block. So they should always appear in a new line above the code block, and should always follow by a new line as well.
 
 ```SCSS
 
@@ -250,14 +250,36 @@ In general, Skroutz CSS file organization should follow something like this:
     │   ├── colors.scss
     │   ├── buttons.scss
     │   └── ...
-    ├── partials
-    │   ├── header.scss
-    │   ├── header_tablet.scss
-    │   ├── header_mobile.scss
-    │   ├── header_retina.scss
-    │   ├── header_ie9.scss
-    │   ├── footer.scss
-    │   ├── ...
+    ├── application
+    │   │
+    │   ├── global
+    │   │   ├── base.scss
+    │   │   ├── general.scss
+    │   │   └── ...
+    │   ├── layouts
+    │   │   ├── header.scss
+    │   │   ├── header_tablet.scss
+    │   │   ├── header_mobile.scss
+    │   │   ├── header_retina.scss
+    │   │   ├── header_ie9.scss
+    │   │   ├── footer.scss
+    │   │   └── ...
+    │   ├── components
+    │   │   ├── autocomplete.scss
+    │   │   ├── lightbox.scss
+    │   │   └── ...
+    │   ├── sections
+    │   │   ├── account
+    │   │   │   ├── account.scss
+    │   │   │   ├── partials
+    │   │   │   │   ├── avatar.scss
+    │   │   │   │   ├── ...
+    │   │   ├── users
+    │   │   │   ├── users.scss
+    │   │   │   ├── partials
+    │   │   │   │   ├── login.scss
+    │   │   │   │   ├── ...
+    │   │   ├── ...
     │   ├── el
     │   │   ├── header.scss
     │   │   ├── header_tablet.scss
@@ -273,6 +295,7 @@ We split module CSS files into partials, for supporting responsive styles (such 
 
 Skroutz Framework consists of the following reusable css partials.
 
+* Variables
 * Functions
 * Colors
 * Fonts
