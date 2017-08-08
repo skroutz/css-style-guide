@@ -8,7 +8,7 @@ Welcome to [Skroutz](http://www.skroutz.gr) CSS Styleguide. Here are some techni
 
 This is the guide we use internally, for our own apps, at [Skroutz](http://www.skroutz.gr).
 
-This guide contains a mashup of ideas from the [Github CSS styleguide](https://github.com/styleguide/css) and the [Scalable and Modular Architecture for CSS guide](http://smacss.com/) (SMACSS for short), with some sprinkle from the [Google CSS styleguide](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml).
+This guide contains a mashup of ideas from the [Github CSS styleguide](https://github.com/styleguide/css), the [Scalable and Modular Architecture for CSS guide](http://smacss.com/) (SMACSS for short) with some sprinkle from the [Atomic Design methodology](http://bradfrost.com/blog/post/atomic-web-design/).
 
 ## Table of Contents
 
@@ -22,8 +22,8 @@ This guide contains a mashup of ideas from the [Github CSS styleguide](https://g
   * [CSS Specificity guidelines](#css-specificity-guidelines)
 * [Media Queries](#media-queries)
 * [Declaration Order](#declaration-order)
+* [Atomic approach](#atomic-approach)
 * [File Organization](#file-organization)
-* [Framework](#framework)
 * [Misc](#misc)
 
 ## Coding Style
@@ -74,8 +74,7 @@ Here is a good example syntax:
 // This is a good SCSS example!
 
 .foo {
-  @include transform(rotate(90deg));
-  @include transition(transform .5s linear);
+  @include center(vertical);
   color: $orange;
   font-size: 13px;
 
@@ -144,12 +143,12 @@ Use `px` for `font-size`, because it offers absolute control over text. Addition
 
 Sass variables can be extremely powerful and helpful. Think of variables as a way to store information that you want to reuse throughout your stylesheet. You can store things like colors, fonts, or any CSS value you think you'll want to reuse throughout the site.
 
-* Define color variables in `framework/_colors.scss`.
+* Define color variables in `helpers/_variablies.scss`.
 * Use the color variables and don't use hardcoded hex triplets directly in CSS files.
-* Define font variables in `framework/_fonts.scss`. Currently, we mainly use `Verdana`, but you can also use `Georgia` and `Arial`.
+* Define font variables in `global/_fonts.scss`. Currently, we mainly use `Verdana`, but you can also use `Georgia` and `Arial`.
 * Try to use semantic names for your variables (Good examples: `$black: #000;`, `$arial: Arial, Helvetica, sans-serif;`).
 * Try to use colors that we already use and if you want to use one that we don’t, you can add it in variables as long as we will need it again.
-* If there is a variable that you want to use in a specific file and we don’t use it in general, define it at the top of the file (ex. `$facebook: #4363ac;` in `framework/_buttons.scss`)
+* If there is a variable that you want to use in a specific file and we don’t use it in general, define it at the top of the file (ex. `$facebook: #4363ac;` in `atoms/_buttons.scss`)
 
 ```SCSS
 // a BAD example
@@ -171,14 +170,14 @@ $border-width: 10px;
 Elements that occur **exactly once** inside a page should use IDs, otherwise, use classes. When in doubt, use a class name.
 
   * **Good** candidates for ids: header, footer, main.
-  * **Bad** candidates for ids: navigation, item listings, item view pages (ex: issue view).
+  * **Bad** candidates for ids: navigation, item listings, buttons.
 
 When styling a component, prefer class names over ids, prefer direct descendant selectors by default, and use as little specificity as possible. Here is a good example:
 
 ```SCSS
 .category-list {
 
-  & > li {
+  > li {
     list-style-type: disc;
   }
 
@@ -218,16 +217,16 @@ If you do wish to use an element selector, it should be within one level of a cl
 
 Media queries are an approach to managing state change. A media query, should be defined within a @media block within a specific style sheet (at the bottom).
 
-The intent is to keep the styles that pertain to a specific layout or module in a logically grouped way. We declare 2 redlines for three versions in our websites, 640px and 960px:
+The intent is to keep the styles that pertain to a specific layout or module in a logically grouped way. Since we use a mobile first approach we declare 2 redlines for three versions in our websites, 640px and 960px:
 
-* Viewport < 640px (Mobile version).
-* 641px < Viewport < 960px (Tablet version).
-* 961px < Viewport (Desktop version).
+* Viewport < 640px (Default, Mobile version).
+* 641px < Viewport < 960px (Medium, Tablet version).
+* 961px < Viewport (Large, Desktop version).
 
 Media queries suffixes we use, are the following:
 
-* _tablet.scss (Tablet version).
-* _mobile.scss (Mobile version).
+* _large.scss (Desktop version).
+* _medium.scss (Tablet version).
 
 We also use media queries to distinguish between [HiDPI displays](http://en.wikipedia.org/wiki/Retina_Display) (aka. Retina displays) and normal displays:
 
@@ -237,74 +236,96 @@ We also use media queries to distinguish between [HiDPI displays](http://en.wiki
 
 The most popular way to order CSS properties is grouped by type. Our preference is for structurally important properties (e.g. positioning and box-model) to be declared prior to all others.
 
+## Atomic approach
+
+To build things faster, better, and easier, we needed to design and develop a robust system of components. We decided to design our design system, which would consist of typography, colors, components, layouts, conventions and clean design guides, in a way that would allow our entire team to build things fast and in a consistent way.
+
+[Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/), [Material Design](https://material.io/guidelines/material-design/introduction.html), [Card-based Design](https://thenextweb.com/dd/2015/06/16/how-cards-are-taking-over-web-design/#.tnw_BPUUhY0H) and more, inspired us in creating and implementing our own Design System.
+
+Atomic Design is a methodology for creating design systems. There are five distinct levels in atomic design:
+
+* Atoms
+* Molecules
+* Organisms
+* Templates (or objects)
+* Pages
+
+CSS partials bundle, gzip and serve in 3 main files (our codebase version names come from the Spaceballs Movie, previous version was named Helmet, current one is the Schwartz):
+
+* schwartz.css
+* schwartz_medium.css
+* schwartz_large.css
+
+To reduce load, we have some more bundles for logged-in users, and other more autonomous (both visually and functionally) sections.
+
+Written this way, CSS is now mobile first and based on Atomic architecture. This results in:
+
+* Better rendering and painting performance, especially for mobiles
+* Easier and faster feature development
+* Consistent, better user experience
+* Structural, easier to maintain, edit & extend CSS
+
 ## File Organization
 
 > Don't agonize. Organize.<br/>
 > -- Florynce Kennedy
 
-In general, Skroutz CSS file organization should follow something like this:
+In general, Skroutz CSS file organization follow somehow atomic design principles:
 
     stylesheets
     |
-    ├── framework
-    │   ├── colors.scss
-    │   ├── buttons.scss
-    │   └── ...
-    ├── application
-    │   │
-    │   ├── global
-    │   │   ├── base.scss
-    │   │   ├── general.scss
-    │   │   └── ...
-    │   ├── layouts
-    │   │   ├── header.scss
-    │   │   ├── header_tablet.scss
-    │   │   ├── header_mobile.scss
-    │   │   ├── header_retina.scss
-    │   │   ├── header_ie9.scss
-    │   │   ├── footer.scss
-    │   │   └── ...
-    │   ├── components
-    │   │   ├── autocomplete.scss
-    │   │   ├── lightbox.scss
-    │   │   └── ...
-    │   ├── sections
-    │   │   ├── account
-    │   │   │   ├── account.scss
-    │   │   │   ├── partials
-    │   │   │   │   ├── avatar.scss
-    │   │   │   │   ├── ...
-    │   │   ├── users
-    │   │   │   ├── users.scss
-    │   │   │   ├── partials
-    │   │   │   │   ├── login.scss
-    │   │   │   │   ├── ...
+    ├── atoms
+    │   ├── cards
+    │   │   ├── cards.scss
     │   │   ├── ...
-    │   ├── el
-    │   │   ├── header.scss
-    │   │   ├── header_tablet.scss
+    │   ├── forms
+    │   │   ├── forms.scss
+    │   │   ├── ...
+    │   ├── global
+    │   │   ├── fonts.scss
+    │   │   ├── ...
+    │   ├── texts
+    │   │   ├── headings.scss
+    │   │   ├── ...
+    │   ├── buttons
+    │   │   ├── buttons.scss
+    │   │   ├── ...
+    │   ├── icons
+    │   │   ├── icons.scss
+    │   │   ├── ...
+    │   └── ...
+    │
+    ├── helpers
+    │   ├── animations.scss
+    │   ├── functions.scss
+    │   ├── variables.scss
+    │   ├── states.scss
+    │   └── ...
+    │
+    ├── layouts
+    │   ├── layouts.scss
+    │   └── ...
+    │
+    ├── molecules
+    │   ├── rating.scss
+    │   ├── pagination.scss
+    │   └── ...
+    │
+    ├── organism
+    │   ├── filters.scss
+    │   ├── footer.scss
+    │   └── ...
+    │
+    ├── pages
+    │   ├── account
+    │   │   ├── account_favorites.scss
     │   │   └── ...
-    │   ├── tr
-    │   │   ├── header.scss
-    │   │   ├── header_tablet.scss
+    │   ├── cart
+    │   │   ├── cart.scss
     │   │   └── ...
 
-We split module CSS files into partials, for supporting responsive styles (such as **tablet** and **mobile** viewports), cross browsing styles (such as **IE9** and **IE8**) and **localization** (L10n) adjustments as well. Not every module or partial has a respective responsive partial or localized version.
 
-## Framework
-
-Skroutz Framework consists of the following reusable css partials.
-
-* Variables
-* Functions
-* Colors
-* Fonts
-* Buttons
-* State
-* Forms
-* Grid
-* Animations
-* Modules
+We split module CSS files into partials, for supporting responsive styles (such as **medium** and **large** viewports), cross browsing styles (such as **IE9** and **IE8**) and **localization** (L10n) adjustments as well. Not every module or partial has a respective responsive partial or localized version.
 
 ## Misc
 
