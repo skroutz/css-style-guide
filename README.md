@@ -345,6 +345,20 @@ In general, Skroutz CSS file organization follow somehow atomic design principle
 
 We split module CSS files into partials, for supporting responsive styles (such as **medium** and **large** viewports), cross browsing styles (such as **IE9** and **IE8**) and **localization** (L10n) adjustments as well. Not every module or partial has a respective responsive partial or localized version.
 
+## Tools
+
+#### Generate icon fonts
+We use font icons. In order to add a new icon we use a [gulp task](https://github.com/nfroidure/gulp-iconfont) and the process is the following:
+
+1) Add a new `.svg` icon into `app/assets/icons/` with a descriptive file name
+2) Run `yarn icons`
+
+The task will generate the glyphicon and add the code needed in `schwartz/helpers/_icons.scss`. The name of the new `.svg` file, will be prefixed with `icon-` and added in the `$icons` list.
+
+Always test after. A `git diff` will show the new addition and only that. Nothing else should change. If that's the case, something went wrong.
+
+Similarly, if you want to remove an icon, you only have to delete the file from `app/assets/icons/` and run `yarn icons`
+
 ## Misc
 
 Be consistent.
