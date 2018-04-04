@@ -353,7 +353,7 @@ We use font icons. In order to add a new icon we use a [gulp task](https://githu
 1) Add a new `.svg` icon into `app/assets/icons/` with a descriptive file name
 2) Run `yarn icons`
 
-The task will generate the glyphicon and add the code needed in `schwartz/helpers/_icons.scss`. The name of the new `.svg` file, will be prefixed with `icon-` and added in the `$icons` list.
+The task will generate the glyphicon and will add the necessary `icon-item` in the `$icons` list in `schwartz/helpers/_icons.scss`. The name of the new `.svg` file will be prefixed with its unique unicode that will match the content of the `icon-item`. Don't forget to add the class `icon` in markup in order to render the icon properly.
 
 Always test after. A `git diff` will show the new addition and only that. Nothing else should change. If that's not the case, something went wrong.
 
